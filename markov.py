@@ -21,15 +21,14 @@ def make_chains(corpus):
         value = (stripped_words[counter+2])
         
         if key in chain_dict:
-
             chain_dict[key].append(value)
         else: 
             chain_dict[key] = [value]
         counter += 1
     return chain_dict
 
+#Takes a dictionary of markov chains and returns random text based off an original text
 def make_text(chains):
-    """Takes a dictionary of markov chains and returns random text based off an original text."""
     for key in chain_dict.iterkeys():
         return key
     rand_keys = random.choice(key)
@@ -38,7 +37,6 @@ def make_text(chains):
     #print rand_keys
     # ^ is NOT returning a random key, keeps giving me back the first one    
     #for i in dict_keys:
-           
         #print chain_dict[random.choice(chain_dict.keys())]
         
         
@@ -51,9 +49,20 @@ def main():
     input_text = open(filename).read()
     
     # passing in input text to create chain_dict and chain_dict into the make_text function to generate the random text
-    chain_dict = make_chains(input_text)
-    random_text = make_text(chain_dict)
-    print random_text
+
+def make_text(chains):
+    """Takes a dictionary of markov chains and returns random text
+    based off an original text."""
+    markov_chain = make_chains()
+    for key,value in markov_chain:
+        print key + " " + choice(value)
+
+def main():
+    args = sys.argv 
+    global input_text
+    filename = args[1]
+    # Change this to read input_text from a file
+    input_text = open(filename).read()
 
 if __name__ == "__main__":
     main()
