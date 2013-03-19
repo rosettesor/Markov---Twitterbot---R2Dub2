@@ -2,7 +2,21 @@
 
 import sys 
 import random 
+import twitter
 
+def tweet(random_text):
+    post = raw_input("post to twitter?" )
+    if post == "yes":
+        mytwitteraccount = twitter.Api(consumer_key="o8ZGuP2NWRJNPKeqJdSziQ", 
+                                consumer_secret="KKs43JnbPsugLJnlfvrUygMQ6NjOG5XKBX4ouw", 
+                                access_token_key="1279577575-XuMifW57kvD710bbN1XrzOpHV0TGLapKrTQLMmV", 
+                                access_token_secret="XKSr0ElVnneETT4dPPl6PiVE5BDFJ4eTAUh5awDpkhs")
+        if len(random_text) <= 140:
+            status = mytwitteraccount.PostUpdate(random_text)
+            return status
+        else:
+            return
+        status = mytwitteraccount.PostUpdates(random_text)
 
 def make_chains(corpus):
     """Takes an input text as a string and returns a dictionary of
@@ -55,10 +69,10 @@ def main():
     # Change this to read input_text from a file
     input_text = open(filename).read()
     chain_dict = make_chains(input_text)
-    print chain_dict
     random_text = make_text(chain_dict)
     print random_text
+    tweet(random_text)
     # passing in input text to create chain_dict and chain_dict into the make_text function to generate the random text
-    
+
 if __name__ == "__main__":
     main()
