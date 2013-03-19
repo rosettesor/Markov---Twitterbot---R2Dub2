@@ -2,15 +2,15 @@
 
 import sys 
 import random 
-from random import choice
+
 
 def make_chains(corpus):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
-    make_chains = input_text.split()
+    make_chains = corpus.split()
     stripped_words = []
     for word in make_chains:
-        new_word = word.strip(".,;?")
+        new_word = word.strip(".,;!?")
         stripped_words.append(new_word)
     chain_dict = {}  
     counter = 0
@@ -26,29 +26,38 @@ def make_chains(corpus):
 
 #Takes a dictionary of markov chains and returns random text based off an original text
 def make_text(chains):
-    for key, value in chain_dict:
-          
-          
-          #rand_keys = random.choice(key)
-       # return rand_keys
-    
-   # if rand_keys == key in chain_dict:
-    #   print value
-    #print rand_keys
-     #^ is NOT returning a random key, keeps giving me back the first one    
-    #for i in dict_keys:
-     #   print chain_dict[random.choice(chain_dict.keys())]
-        
-        
+    key_list = []
+    for key in chains:
+        key_list.append(key)
+
+    random_number = random.randint(0,(len(key_list)-1))   
+   
+    random_key = key_list[random_number] 
+
+    # makes the tuple "random_key" into a list
+    new_sentence = [random_key[0], random_key[1]]
+
+    while len(new_sentence) < 10:
+        last_two_words = (new_sentence[-2], new_sentence[-1])
+        if last_two_words not in key_list:
+            last_two_words = random.choice(key_list)
+        # the value in the dictionary pointing to the key above
+        new_add = random.choice(chains[last_two_words])
+        new_sentence.append(new_add)
+        # makes the list "new_sentence" into a string
+        sentence = " ".join(new_sentence)
+    return sentence
+
 def main():
     args = sys.argv 
     global input_text
-    global chain_dict
     filename = args[1]
     # Change this to read input_text from a file
     input_text = open(filename).read()
     chain_dict = make_chains(input_text)
+    print chain_dict
     random_text = make_text(chain_dict)
+    print random_text
     # passing in input text to create chain_dict and chain_dict into the make_text function to generate the random text
     
 if __name__ == "__main__":
